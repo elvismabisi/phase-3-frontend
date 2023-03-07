@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import NavBar from '../components/NavBar'
-import Project from '../components/Project'
+import NavBar from '../components/Home'
+import Project from '../components/ProjectMembers'
 
 
 function Home({user}) {

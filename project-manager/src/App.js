@@ -1,11 +1,11 @@
 import {Routes, Route, useNavigate} from 'react-router-dom'
-import Project from './components/Project';
+import Project from './components/ProjectMembers';
 import Home from './views/Home';
-import NavBar from './components/NavBar';
+import NavBar from './components/Home';
 import { useEffect, useState } from 'react';
-import Login from './components/Login';
-import NewProject from './components/NewProject';
-import ProjectDetails from './components/ProjectDetails';
+import Login from './components/LoginPage';
+import NewProject from './components/Projects';
+import ProjectDetails from './components/Registration';
 
 
 function App() {
