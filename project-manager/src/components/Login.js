@@ -1,38 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from "react";
+import LoginForm from "./LoginForm";
 
-function Login({setUser}) {
-  const [user_info, setUserInfo] = useState()
-  const navigate = useNavigate()
-  
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-function login(e){
-  e.preventDefault()
-  fetch("http://localhost:9292/login",{
-    method: 'POST',
-    headers: { 'Content-Type' : 'application/json' },
-    body: JSON.stringify(user_info)
-  })
-  .then(response => response.json())
-  .then(data => {
-    setUser(data)
-    localStorage.setItem('user_id', `${data.id}`)
-    navigate('/')
-  })
-}
-function onchange(e){
-  setUserInfo({...user_info, [e.target.name]: e.target.value})
-}
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:9292/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (data.error) {
+        setError(data.error);
+      } else {
+        localStorage.setItem("user_id", data.user_id);
+        
+        window.location.href = "/tasks";
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div>
-      <form onSubmit={login}>
-        <input type="email" placeholder='Enter your email here....' name='email' onBlur={onchange}/>
-        <input type="password" placeholder='Enter your password...' name='password' onBlur={onchange}/>
-        <button>Login</button>
-      </form>
+      <LoginForm
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        onSubmit={handleSubmit}
+        error={error}
+      />
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
