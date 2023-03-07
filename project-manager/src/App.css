@@ -203,4 +203,43 @@ footer {
   color: #999;
 }
 
+/* landing page */
 
+
+.LandingPage-body {
+  background-color: #f7f7f7;
+  padding: 2rem;
+}
+
+.main-title {
+  font-size: 3rem;
+  margin-top: 3rem;
+}
+
+.main-para {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+
+.primary-button {
+  background-color: #3f51b5;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 0.8rem 2rem;
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background-color: #1a237e;
+}
+
+#reg_btn {
+  margin-left: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
