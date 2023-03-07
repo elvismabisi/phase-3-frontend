@@ -1,30 +1,57 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { PROJECTS } from '../assets/info';
+var reversedProjects =[]
+const Projects = ({ projects, setProjects }) => {
+  useEffect(() => {
+    fetch(`http://localhost:9292/projects`)
+    .then(r => r.json())
+    .then(d => setProjects(d))
+     reversedProjects = projects.reverse
+  }, []);
+console.log(reversedProjects)
+  const handleDelete = (id,e) => {
+    e.preventDefault()
+    console.log(id)
+    fetch(`http://localhost:9292/projects/${id}`,{
+      method: "DELETE",
+      headers: {"accept": "application-json"}
+    })
+    const filteredProjects = projects.filter((project) => project.id != id)
+    return setProjects(filteredProjects);
+  }
 
-function NewProject() {
   return (
-    <div>
-        <form>
-            <label>Name</label>
-            <input type="text" placeholder='Name' /><br />
-            <label>Description</label>
-            <input type="text" placeholder='Description' /><br />
-            <label>Status</label>
-            <input type="text" placeholder='Status' /><br />
-            <label>Date</label>
-            <input type="text" placeholder='Date' /><br />
-            <label>Due Date</label>
-            <input type="text" placeholder='Due Date' /><br />
-        </form>
+    <div className='projects-container'>
+      <h1>All projects</h1>
+      <div className='all-projects-container'>
+        {projects.map((project) => {
+          return (
+            <div
+              className='project'
+              key={project.id}
+              // to={`/project/${project.id}`}
+            >
+              <section>
+                <h2>{project.title}</h2>
+                <details>
+                  <summary>Project description</summary>
+                  <p>{project.description}</p>
+                </details>
+              </section>
+              <div className='project-icons'>
+                <i class='fa-solid fa-pen-to-square'></i>
+                <i
+                  class='fa-solid fa-trash'
+                  onClick={(e) => handleDelete(project.id,e)}
+                ></i>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default NewProject
-
-
-// t.string :name
-// t.string :description
-// t.string :completion_status
-// t.date :date
-// t.date :due_date
-// t.integer :user_id
+export default Projects;

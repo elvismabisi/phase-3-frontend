@@ -1,30 +1,22 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState,useEffect} from 'react';
+import { useParams } from 'react-router-dom';
 
-function Project() {
 
-  const [project, setProject] = useState([])
-  const [allProjects, setAllProjects] = useState([])
+const ProjectMembers = () => {
+  const { id } = useParams();
 
-useEffect(() =>{
-  fetch("https://jsonplaceholder.typicode.com/posts")
-  .then(response => response.json())
-  .then((tasks) => {
-    console.log(project)
-    setProject(project)
-    setAllProjects(
-    project.map((project) => (
-      <div>
-        <h2>{project.title}</h2>
-        <p>{project.body}</p>
-      </div>
-    )))
-  })
-}, [])
+useEffect(() => {
+  fetch(`http://localhost:9292/project-members`)
+  .then(r => r.json())
+  .then(d => console.log(d))
+},[])
+
   return (
-    <div>
-      {allProjects}
+    <div className='project-members-container'>
+      <h1>Project Members</h1>
+      <h2>Project Members</h2>
     </div>
-  )
-}
+  );
+};
 
-export default Project
+export default ProjectMembers;

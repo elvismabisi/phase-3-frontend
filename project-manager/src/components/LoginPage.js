@@ -1,46 +1,32 @@
-import { useState } from "react";
-import LoginForm from "./LoginForm";
+import React from 'react'
+import { Link } from 'react-router-dom'
+//import '../App.css'
 
-function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:9292/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
-      if (data.error) {
-        setError(data.error);
-      } else {
-        localStorage.setItem("user_id", data.user_id);
-        
-        window.location.href = "/tasks";
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return (
-    <div>
-      <LoginForm
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        onSubmit={handleSubmit}
-        error={error}
-      />
-    </div>
-  );
+export default function SignInPage() {
+    return (
+        <div className="text-center login-body m-5 auto">
+        <div className="login-form">
+            <h2 className="title-sign">Sign in </h2>
+            <form className="form" action="/home">
+                <p className="paragraph">
+                    <label className="labels">Username or email address</label><br/>
+                    <input type="text" name="first_name" required />
+                </p>
+                <p className="paragraph">
+                    <label ClassName="labels">Enter Password</label>
+                    <Link to="/forget-password"><label className="right-label"></label></Link>
+                    <br/>
+                    <input type="password" name="password" required />
+                </p>
+                <p className="paragraph">
+                    <button id="sub_btn" type="submit">Login</button>
+                </p>
+            </form>
+            <footer >
+                <p className="paragraph">Register if its your first time here <Link to="/register">Register</Link>.</p>
+                <p><Link to="/">Back to Homepage</Link>.</p>
+            </footer>
+        </div>
+        </div>
+    )
 }
-
-export default Login;
